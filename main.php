@@ -1,7 +1,10 @@
 <?php
 echo "<h1>Errate die Nummer</h1>";
 session_start();
-$_SESSION["counter"] = 0;
+if (!isset($_SESSION["counter"])) {
+    $_SESSION["counter"] = 0;
+}
+
 if (isset($_POST["number"])) {
     $zahl = $_POST["number"];
     if (!isset($_SESSION["würfel"])) {
@@ -13,8 +16,8 @@ if (isset($_POST["number"])) {
         echo "<p class='text'>Glückwunsch! Sie haben gewonnen.<br> Die Zahl war: $würfel</p>";
         $_SESSION["counter"] = 0;
         session_destroy();
+        $_SESSION["counter"] = 0;
     } elseif ($zahl > $würfel) {
-
         $_SESSION["counter"]++;
         echo "<br><p class='text'>Kleinere Zahl eingeben!</p>";
     } else {
@@ -37,7 +40,7 @@ if (isset($_POST["number"])) {
     <div class="number-container">
         <input class="number" type="number" name="number" placeholder="Number between 0-100"><br><br>
         <input class="submit" type="submit">
-        <p>Counter:<?php echo "{$_SESSION['counter']}"; ?></p>
+        <p>Versuche:<?php echo "{$_SESSION['counter']}"; ?></p>
     </div>
 </div>
 </form>
